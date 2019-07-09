@@ -48,6 +48,8 @@ public class SuggestionProviderImpl implements SuggestionProvider {
 
         final String statement = String.format("SELECT [rep:suggest()] FROM [%s] WHERE ISDESCENDANTNODE('%s') AND SUGGEST('%s')", escape(nodeType), escape(path), escape(term));
 
+        log.info("statement german : ");
+        log.info(statement.toString());
         final QueryManager queryManager = resourceResolver.adaptTo(Session.class).getWorkspace().getQueryManager();
         final QueryResult result = queryManager.createQuery(statement, javax.jcr.query.Query.JCR_SQL2).execute();
         final RowIterator rows = result.getRows();
@@ -57,7 +59,12 @@ public class SuggestionProviderImpl implements SuggestionProvider {
             final Row row = rows.nextRow();
 
             String suggestion = row.getValue("rep:suggest()").getString();
+            log.info("row suggestionprovider  german: ");
+            log.info(suggestions.toString());
             String key = getUniqueSuggestionKey(suggestion);
+            suggestion = suggestion.replaceAll("^\\s*","");
+            log.info("sugerencias despues espacios german ");
+            log.info(suggestion.toString());
 
             if (suggestionsKeys.contains(key)) {
                 continue;
@@ -65,6 +72,8 @@ public class SuggestionProviderImpl implements SuggestionProvider {
 
             suggestionsKeys.add(key);
             suggestions.add(StringUtils.lowerCase(suggestion));
+            log.info("row suggestionprovider espacios german: ");
+            log.info(suggestions.toString());
             if (limit > 0 && ++count >= limit) {
                 break;
             }
