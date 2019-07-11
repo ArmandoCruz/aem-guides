@@ -21,7 +21,7 @@ public class AudiencePredicateFactoryImpl extends AbstractTagPredicateFactory im
 
     @Override
     public String getTitle() {
-        return "Audience";
+        return "Audiencias Prueba";
     }
 
     @Override

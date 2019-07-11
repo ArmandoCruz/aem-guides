@@ -32,7 +32,7 @@ import java.util.List;
 )
 public class SuggestionsImpl implements Suggestions {
     private static final Logger log = LoggerFactory.getLogger(SuggestionsImpl.class);
-
+    
     private static final String PN_SUGGESTIONS_LIMIT = "suggestionsLimit";
     private static final int DEFAULT_SUGGESTIONS_LIMIT = 5;
 
@@ -59,11 +59,23 @@ public class SuggestionsImpl implements Suggestions {
         try {
             // This is required due to a bug in Sling Model Exporter; where 2 Sing Model Exporters cannot bind to the same resourceType
             final String searchPath = new ComponentInheritanceValueMap(resource).getInherited(PathsPredicateFactoryImpl.PN_SEARCH_PATHS, PathsPredicateFactoryImpl.DEFAULT_SEARCH_PATH);
+            
+            log.info("searchPath german : ");
+            log.info(searchPath.toString());
+            log.info("resource resolver german : ");
+            log.info(resourceResolver.toString());
             suggestions = suggestionProvider.suggest(resourceResolver, searchPath,
                                                 NameConstants.NT_PAGE, getSearchTerm(),
                                                 resource.getValueMap().get(PN_SUGGESTIONS_LIMIT, DEFAULT_SUGGESTIONS_LIMIT));
+ 
+            for (String string : suggestions) {
+            	log.info("lista de sugerencias german: ");
+                log.info(suggestions.toString());
+			}
+            
         } catch (RepositoryException e) {
             log.error("Could not collect suggestions for search term [ {} ]", getSearchTerm());
+            
         }
 
         timeTaken = System.currentTimeMillis() - start;

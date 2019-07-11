@@ -57,7 +57,12 @@ public class SuggestionProviderImpl implements SuggestionProvider {
             final Row row = rows.nextRow();
 
             String suggestion = row.getValue("rep:suggest()").getString();
+            log.info("row suggestionprovider  german: ");
+            log.info(suggestions.toString());
             String key = getUniqueSuggestionKey(suggestion);
+            suggestion = suggestion.replaceAll("^\\s*","");
+            log.info("sugerencias despues espacios german ");
+            log.info(suggestion.toString());
 
             if (suggestionsKeys.contains(key)) {
                 continue;
@@ -65,6 +70,8 @@ public class SuggestionProviderImpl implements SuggestionProvider {
 
             suggestionsKeys.add(key);
             suggestions.add(StringUtils.lowerCase(suggestion));
+            log.info("row suggestionprovider espacios german: ");
+            log.info(suggestions.toString());
             if (limit > 0 && ++count >= limit) {
                 break;
             }
