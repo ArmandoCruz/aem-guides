@@ -48,8 +48,6 @@ public class SuggestionProviderImpl implements SuggestionProvider {
 
         final String statement = String.format("SELECT [rep:suggest()] FROM [%s] WHERE ISDESCENDANTNODE('%s') AND SUGGEST('%s')", escape(nodeType), escape(path), escape(term));
 
-        log.info("statement german : ");
-        log.info(statement.toString());
         final QueryManager queryManager = resourceResolver.adaptTo(Session.class).getWorkspace().getQueryManager();
         final QueryResult result = queryManager.createQuery(statement, javax.jcr.query.Query.JCR_SQL2).execute();
         final RowIterator rows = result.getRows();
